@@ -8,9 +8,10 @@
 
 #include <array>
 #include <chrono>
-#include "l500/l500.h"
+#include "l500/l500-depth.h"
 #include "ivcam/sr300.h"
 #include "ds5/ds5-factory.h"
+#include "l500/l500-factory.h"
 #include "ds5/ds5-timestamp.h"
 #include "backend.h"
 #include "mock/recorder.h"
@@ -332,7 +333,7 @@ namespace librealsense
             std::copy(begin(ds5_devices), end(ds5_devices), std::back_inserter(list));
         }
 
-        auto l500_devices = l500_info::pick_l500_devices(ctx, devices.uvc_devices, devices.usb_devices);
+        auto l500_devices = l500_info::pick_l500_devices(ctx, devices);
         std::copy(begin(l500_devices), end(l500_devices), std::back_inserter(list));
 
         if (mask & RS2_PRODUCT_LINE_SR300)

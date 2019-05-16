@@ -15,6 +15,7 @@
 #include <iomanip>
 #include <cmath>
 #include <map>
+#include <functional>
 
 #ifndef PI
 const double PI = 3.14159265358979323846;
@@ -410,6 +411,9 @@ public:
         case RS2_FORMAT_Y8:
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, frame.get_data());
             break;
+        case RS2_FORMAT_Y10BPACK:
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, width, height, 0, GL_LUMINANCE, GL_UNSIGNED_SHORT, frame.get_data());
+            break;
         default:
             throw std::runtime_error("The requested format is not supported by this demo!");
         }
@@ -522,6 +526,11 @@ public:
     {
         glfwDestroyWindow(win);
         glfwTerminate();
+    }
+
+    void close()
+    {
+        glfwSetWindowShouldClose(win, 1);
     }
 
     float width() const { return float(_width); }
@@ -653,6 +662,7 @@ private:
         case RS2_FORMAT_RGBA8:
         case RS2_FORMAT_Y8:
         case RS2_FORMAT_MOTION_XYZ32F:
+        case RS2_FORMAT_Y10BPACK:
             return true;
         default:
             return false;
@@ -706,6 +716,25 @@ private:
         }
 
         return rv;
+    }
+};
+
+// Struct to get keys pressed on window
+struct window_key_listener {
+    int last_key = GLFW_KEY_UNKNOWN;
+
+    window_key_listener(window& win) {
+        win.on_key_release = std::bind(&window_key_listener::on_key_release, this, std::placeholders::_1);
+    }
+
+    void on_key_release(int key) {
+        last_key = key;
+    }
+
+    int get_key() {
+        int key = last_key;
+        last_key = GLFW_KEY_UNKNOWN;
+        return key;
     }
 };
 

@@ -65,19 +65,11 @@ template<typename T> T rad2deg(T val) { return T(val * r2d); }
 #include "../common/android_helpers.h"
 #endif
 
+#define UNKNOWN_VALUE "UNKNOWN"
+
 namespace librealsense
 {
-    #define UNKNOWN_VALUE "UNKNOWN"
-    const double TIMESTAMP_USEC_TO_MSEC = 0.001;
-    const double TIMESTAMP_NSEC_TO_MSEC = 0.000001;
-
-#ifdef _WIN32
-/* The FW timestamps for HID are converted to Usec in Windows kernel */
-#define HID_TIMESTAMP_MULTIPLIER TIMESTAMP_USEC_TO_MSEC
-#else
-/* The FW timestamps for HID are converted to Nanosec in Linux kernel */
-#define HID_TIMESTAMP_MULTIPLIER TIMESTAMP_NSEC_TO_MSEC
-#endif // define HID_TIMESTAMP_MULTIPLIER
+    static const double TIMESTAMP_USEC_TO_MSEC = 0.001f;
 
     ///////////////////////////////////
     // Utility types for general use //

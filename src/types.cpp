@@ -283,6 +283,7 @@ namespace librealsense
             CASE(LLD_TEMPERATURE)
             CASE(MC_TEMPERATURE)
             CASE(MA_TEMPERATURE)
+            CASE(HARDWARE_PRESET)
         default: assert(!is_valid(value)); return UNKNOWN_VALUE;
         }
 #undef CASE
@@ -313,6 +314,7 @@ namespace librealsense
             CASE(MOTION_XYZ32F)
             CASE(GPIO_RAW)
             CASE(6DOF)
+            CASE(Y10BPACK)
         default: assert(!is_valid(value)); return UNKNOWN_VALUE;
         }
 #undef CASE
@@ -328,6 +330,7 @@ namespace librealsense
             CASE(INVERSE_BROWN_CONRADY)
             CASE(FTHETA)
             CASE(BROWN_CONRADY)
+            CASE(KANNALA_BRANDT4)
         default: assert(!is_valid(value)); return UNKNOWN_VALUE;
         }
 #undef CASE
